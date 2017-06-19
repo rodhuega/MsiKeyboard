@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
@@ -7,5 +10,72 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+               <children>
+                  <HBox minWidth="-Infinity" spacing="30.0">
+                     <children>
+                        <RadioButton mnemonicParsing="false" text="Normal">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="ToggleSelectionMode" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton mnemonicParsing="false" text="Gaming" toggleGroup="$ToggleSelectionMode" />
+                        <RadioButton mnemonicParsing="false" text="Breathe" toggleGroup="$ToggleSelectionMode" />
+                        <RadioButton mnemonicParsing="false" text="Demo" toggleGroup="$ToggleSelectionMode" />
+                        <RadioButton layoutX="112.0" layoutY="10.0" mnemonicParsing="false" text="Wave" toggleGroup="$ToggleSelectionMode" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                     <children>
+                        <RadioButton mnemonicParsing="false" text="Off">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="ToggleBrightnessMode" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Low" toggleGroup="$ToggleBrightnessMode" />
+                        <RadioButton layoutX="115.0" layoutY="10.0" mnemonicParsing="false" text="Medium" toggleGroup="$ToggleBrightnessMode" />
+                        <RadioButton layoutX="220.0" layoutY="10.0" mnemonicParsing="false" text="High" toggleGroup="$ToggleBrightnessMode" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Region prefHeight="200.0" prefWidth="200.0" />
+            <Region layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" />
+            <Region layoutX="265.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" />
+            <Region layoutX="410.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" />
+            <Button fx:id="applyButton" alignment="TOP_RIGHT" mnemonicParsing="false" onAction="#makeChanges" text="Apply" />
+         </children>
+         <padding>
+            <Insets top="250.0" />
+         </padding>
+      </HBox>
+   </children>
+</VBox>
