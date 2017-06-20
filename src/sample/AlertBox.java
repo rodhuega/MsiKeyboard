@@ -6,6 +6,8 @@ import javafx.geometry.*;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.image.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.scene.control.Button;
@@ -31,6 +33,7 @@ public class AlertBox {
     public static void display(String title, String message,boolean forceMode, Hyperlink[] link) {
         Stage windowAlert = new Stage();
         windowAlert.setTitle(title);
+        windowAlert.getIcons().add(new Image("/res/logo.png"));
         windowAlert.initModality(Modality.APPLICATION_MODAL);
         Label messageLabel = new Label(message);
         Button closeButton = new Button("Close");
@@ -38,13 +41,13 @@ public class AlertBox {
             e.consume();
             windowAlert.close();
             if(forceMode) {
-              //  Platform.exit();
+               Platform.exit();
             }
         });
         closeButton.setOnAction(e-> {
             windowAlert.close();
             if(forceMode) {
-               // Platform.exit();
+               Platform.exit();
             }
         });
         VBox layout1 = new VBox(20);
