@@ -5,12 +5,14 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable, Serializable{
@@ -21,7 +23,29 @@ public class Controller implements Initializable, Serializable{
     @FXML
     private ToggleGroup ToggleBrightnessMode;
     @FXML
+    private RadioButton bOff;
+    @FXML
+    private RadioButton bLow;
+    @FXML
+    private RadioButton bMedium;
+    @FXML
+    private RadioButton bHigh;
+
+
+    @FXML
     private ToggleGroup ToggleSelectionMode;
+    @FXML
+    private RadioButton modeNormal;
+    @FXML
+    private RadioButton modeGaming;
+    @FXML
+    private RadioButton modeBreathe;
+    @FXML
+    private RadioButton modeMusic;
+    @FXML
+    private RadioButton modeWave;
+
+
     @FXML
     private ComboBox numberOfColors;
 
@@ -69,13 +93,32 @@ public class Controller implements Initializable, Serializable{
                 File f1 = new File("default.msik");
                 if(f1.exists()) {
                     loadProfile(f1);
+
+                    //Puede que este codigo vaya a otro sitio
                     System.out.print(defaultP.toString());
+                    numberOfColors.setValue(defaultP.getnColor());
+
+                    nColors();
+                    selectedMode();
+                    selectedBrightness();
+
+                    String colorPuesto1 = defaultP.getColors().get(0);
+                    rColor1.setFill(Paint.valueOf(colorPuesto1+"ff"));
+                    if(n>=2) {
+                        String colorPuesto2 = defaultP.getColors().get(1);
+                        rColor2.setFill(Paint.valueOf(colorPuesto2+"ff"));
+                    }
+                    if(n==3) {
+                        String colorPuesto3 = defaultP.getColors().get(2);
+                        rColor3.setFill(Paint.valueOf(colorPuesto3+"ff"));
+                    }
                 }else {
                     defaultP=new Profile();
+                    nColors();
+                    colorSelector.setValue(Color.BLACK);
+                    getColor();
                 }
-                nColors();
-                colorSelector.setValue(Color.BLACK);
-                getColor();
+
 
 
 
@@ -96,6 +139,7 @@ public class Controller implements Initializable, Serializable{
             int BrightnessSelected= brightness(textBrightness);
             defaultP.setBrightness(BrightnessSelected);
             String rColor1RGB = rColor1.getFill().toString().substring(0,8);
+            defaultP.setColors(new ArrayList<>());
 
             if(defaultP.getColors().size()==0) {
                 defaultP.getColors().add(rColor1RGB);
@@ -135,7 +179,7 @@ public class Controller implements Initializable, Serializable{
                 command += rColor3RGB+" ";
             }
             command+=textBrightness+ " "+ textMode;
-            System.out.println(command);
+            System.out.println("\n"+command);
             saveProfile();
 
             Process p = Runtime.getRuntime().exec(command);
@@ -189,18 +233,18 @@ public class Controller implements Initializable, Serializable{
 
     //Obtener modo Seleccionado
     public int mode(String s) {
-        if(s.equals("Normal")) { return Profile.NORMAL;}
-        else if(s.equals("Gaming")) { return Profile.GAMING;}
-        else if(s.equals("Breathe")) { return Profile.BREATHE;}
-        else if(s.equals("Demo")) { return Profile.DEMO;}
+        if(s.equals("normal")) { return Profile.NORMAL;}
+        else if(s.equals("gaming")) { return Profile.GAMING;}
+        else if(s.equals("breathe")) { return Profile.BREATHE;}
+        else if(s.equals("music sync")) { return Profile.DEMO;}
         else { return Profile.WAVE;}
     }
 
     //Obtener modo brillo
     public int brightness(String s) {
-        if(s.equals("Off")) { return Profile.OFF;}
-        else if(s.equals("Low")) { return Profile.LOW;}
-        else if(s.equals("Medium")) { return Profile.MEDIUM;}
+        if(s.equals("off")) { return Profile.OFF;}
+        else if(s.equals("low")) { return Profile.LOW;}
+        else if(s.equals("medium")) { return Profile.MEDIUM;}
         else { return Profile.HIGH;}
     }
 
@@ -226,11 +270,13 @@ public class Controller implements Initializable, Serializable{
             ObjectOutputStream f3 = new ObjectOutputStream(f2);
             f3.writeObject(defaultP);
             f3.close();
-        }catch(IOException e) {
-
-        }
+        }catch(IOException e) {}
     }
 
+    /**
+     * Loads a new profile to the gui.
+     * @param f1 File, the file where the new profile is.
+     */
     public void loadProfile(File f1){
         try {
             FileInputStream f2 = new FileInputStream(f1);
@@ -238,6 +284,53 @@ public class Controller implements Initializable, Serializable{
             defaultP = (Profile) f3.readObject();
             f3.close();
         }catch (IOException |ClassCastException |ClassNotFoundException e) {}
+    }
+
+    /**
+     * Select the Mode that you have for the keyboard
+     */
+    public void selectedMode() {
+        ToggleSelectionMode.getSelectedToggle().setSelected(false);
+        int modeInt = defaultP.getMode();
+        if(modeInt==Profile.WAVE) {
+            modeWave.setSelected(true);
+            ToggleSelectionMode.selectToggle(modeWave);
+        }else if(modeInt==Profile.GAMING) {
+            modeGaming.setSelected(true);
+            ToggleSelectionMode.selectToggle(modeGaming);
+        }else if(modeInt==Profile.BREATHE) {
+            modeBreathe.setSelected(true);
+            ToggleSelectionMode.selectToggle(modeBreathe);
+        }else if(modeInt==Profile.DEMO) {
+            modeBreathe.setSelected(true);
+            ToggleSelectionMode.selectToggle(modeMusic);
+        }else {
+            modeNormal.setSelected(true);
+            ToggleSelectionMode.selectToggle(modeNormal);
+        }
+    }
+
+    /**
+     *Select the Brightness mode that you have for the keyboard.
+     */
+    public void selectedBrightness() {
+        //Unselect the birghtness mode
+        ToggleBrightnessMode.getSelectedToggle().setSelected(false);
+        //Select the right brighness mode
+        int modeInt = defaultP.getBrightness();
+        if(modeInt==Profile.OFF) {
+            bOff.setSelected(true);
+            ToggleBrightnessMode.selectToggle(bOff);
+        }else if(modeInt==Profile.LOW) {
+            bLow.setSelected(true);
+            ToggleBrightnessMode.selectToggle(bLow);
+        }else if(modeInt==Profile.MEDIUM) {
+            bMedium.setSelected(true);
+            ToggleBrightnessMode.selectToggle(bMedium);
+        }else {
+            bHigh.setSelected(true);
+            ToggleBrightnessMode.selectToggle(bHigh);
+        }
     }
 
 

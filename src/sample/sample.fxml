@@ -48,27 +48,27 @@
                <children>
                   <HBox minWidth="-Infinity" spacing="30.0">
                      <children>
-                        <RadioButton mnemonicParsing="false" selected="true" text="Normal">
+                        <RadioButton fx:id="modeNormal" mnemonicParsing="false" selected="true" text="Normal">
                            <toggleGroup>
                               <ToggleGroup fx:id="ToggleSelectionMode" />
                            </toggleGroup>
                         </RadioButton>
-                        <RadioButton mnemonicParsing="false" text="Gaming" toggleGroup="$ToggleSelectionMode" />
-                        <RadioButton mnemonicParsing="false" text="Breathe" toggleGroup="$ToggleSelectionMode" />
-                        <RadioButton mnemonicParsing="false" text="Demo" toggleGroup="$ToggleSelectionMode" />
-                        <RadioButton layoutX="112.0" layoutY="10.0" mnemonicParsing="false" text="Wave" toggleGroup="$ToggleSelectionMode" />
+                        <RadioButton fx:id="modeGaming" mnemonicParsing="false" text="Gaming" toggleGroup="$ToggleSelectionMode" />
+                        <RadioButton fx:id="modeBreathe" mnemonicParsing="false" text="Breathe" toggleGroup="$ToggleSelectionMode" />
+                        <RadioButton fx:id="modeMusic" mnemonicParsing="false" text="Music Sync" toggleGroup="$ToggleSelectionMode" />
+                        <RadioButton fx:id="modeWave" layoutX="112.0" layoutY="10.0" mnemonicParsing="false" text="Wave" toggleGroup="$ToggleSelectionMode" />
                      </children>
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                      <children>
-                        <RadioButton mnemonicParsing="false" text="Off">
+                        <RadioButton fx:id="bOff" mnemonicParsing="false" text="Off">
                            <toggleGroup>
                               <ToggleGroup fx:id="ToggleBrightnessMode" />
                            </toggleGroup>
                         </RadioButton>
-                        <RadioButton layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Low" toggleGroup="$ToggleBrightnessMode" />
-                        <RadioButton layoutX="115.0" layoutY="10.0" mnemonicParsing="false" text="Medium" toggleGroup="$ToggleBrightnessMode" />
-                        <RadioButton layoutX="220.0" layoutY="10.0" mnemonicParsing="false" selected="true" text="High" toggleGroup="$ToggleBrightnessMode" />
+                        <RadioButton fx:id="bLow" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Low" toggleGroup="$ToggleBrightnessMode" />
+                        <RadioButton fx:id="bMedium" layoutX="115.0" layoutY="10.0" mnemonicParsing="false" text="Medium" toggleGroup="$ToggleBrightnessMode" />
+                        <RadioButton fx:id="bHigh" layoutX="220.0" layoutY="10.0" mnemonicParsing="false" selected="true" text="High" toggleGroup="$ToggleBrightnessMode" />
                      </children>
                   </HBox>
                </children>
