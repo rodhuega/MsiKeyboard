@@ -6,13 +6,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Main class, set the width,height, Title of the app
+ */
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("MSI KeyBoard");
-        primaryStage.setScene(new Scene(root, 900, 250));
+        primaryStage.setScene(new Scene(root, 900, 300));
         primaryStage.setResizable(false);
         primaryStage.show();
     }
