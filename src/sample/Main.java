@@ -16,10 +16,9 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("MSI KeyBoard");
-        primaryStage.getIcons().add(new Image("/res/logo.png"));
-        primaryStage.setScene(new Scene(root, 900, 300));
+//        primaryStage.getIcons().add(new Image("/res/logo.png"));
+        primaryStage.setScene(new Scene(root, 900, 350));
         primaryStage.setResizable(false);
-        primaryStage.setIconified(true);//Iniciar minimizado
         primaryStage.show();
     }
 

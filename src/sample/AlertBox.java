@@ -33,7 +33,7 @@ public class AlertBox {
     public static void display(String title, String message,boolean forceMode, Hyperlink[] link) {
         Stage windowAlert = new Stage();
         windowAlert.setTitle(title);
-        windowAlert.getIcons().add(new Image("/res/logo.png"));
+      //  windowAlert.getIcons().add(new Image("/res/logo.png"));
         windowAlert.initModality(Modality.APPLICATION_MODAL);
         Label messageLabel = new Label(message);
         Button closeButton = new Button("Close");

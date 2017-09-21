@@ -96,12 +96,15 @@ public class Controller implements Initializable, Serializable{
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             //test if you are able to run the app
+            String chmodCommand="sudo chmod 777 ./autostart.sh";
+            exeCommand(chmodCommand);
+
             Process p = Runtime.getRuntime().exec("msiklm test");
             p.waitFor();
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String line=reader.readLine();
             if(line.contains("No")) {//Check if you have a compatible keyboard
-                 throw new IllegalArgumentException("Teclado no compatible");
+                throw new IllegalArgumentException("Teclado no compatible");
             }
 
             File f1 = new File("default.msik");
@@ -114,7 +117,7 @@ public class Controller implements Initializable, Serializable{
                 getColor();
             }
         }catch(IOException | InterruptedException | IllegalArgumentException e) {//If the keyboard is not compatible, you will have to close the app
-            AlertBox.display("Error", "No compatible keyboard",true, new Hyperlink[0]);
+            AlertBox.display("Error", "No compatible keyboard",false, new Hyperlink[0]);
         }
     }
 
@@ -122,22 +125,20 @@ public class Controller implements Initializable, Serializable{
      * Make the changes of the gui to the keyboard when you press the Apply Button
      */
     public void makeChanges(){
-        try {
-            String command="msiklm ";
-            File f1 = new File(defaultP.getName());
-            saveProfile(f1);//save the actual Gui to the profile
-            //get the color values
-            if(defaultP.getnColor()==1)//only one color
-                command+= defaultP.getColors().get(0);
-            else if(defaultP.getnColor()==2)//two colors
-                command+= defaultP.getColors().get(0)+","+defaultP.getColors().get(1);
-            else  //three colors
-                command+= defaultP.getColors().get(0)+","+defaultP.getColors().get(1)+","+defaultP.getColors().get(2);
-            //set the mode and brightness to the command
-            command+= " "+ defaultP.StringBrightness()+ " "+ defaultP.StringMode();
-            //Run the command
-            Process p = Runtime.getRuntime().exec(command);
-        }catch(IOException e) {}
+        String command="msiklm ";
+        File f1 = new File(defaultP.getName());
+        saveProfile(f1);//save the actual Gui to the profile
+        //get the color values
+        if(defaultP.getnColor()==1)//only one color
+            command+= defaultP.getColors().get(0);
+        else if(defaultP.getnColor()==2)//two colors
+            command+= defaultP.getColors().get(0)+","+defaultP.getColors().get(1);
+        else  //three colors
+            command+= defaultP.getColors().get(0)+","+defaultP.getColors().get(1)+","+defaultP.getColors().get(2);
+        //set the mode and brightness to the command
+        command+= " "+ defaultP.StringBrightness()+ " "+ defaultP.StringMode();
+        //Run the command
+        exeCommand(command);
     }
 
     /**
@@ -401,6 +402,39 @@ public class Controller implements Initializable, Serializable{
                 "-Music Sync mode does not respect the colors.";
         AlertBox.display("About", message,false,links);
     }
+
+    ////////////////////////////////////
+    //NEN
+    /**
+     * Enable the keyboard settings when you start your computer.
+     */
+    public void enableAutostart() {
+        String enableCommand="./autostart.sh ";
+        enableCommand += defaultP.getCommand();
+        exeCommand(enableCommand);
+    }
+
+    /**
+     * Diable the keyboard settings when you start your computer
+     */
+    @FXML
+    public void disableAutostart(){
+        String disableCommand="./autostart.sh --disable";
+        exeCommand(disableCommand);
+    }
+
+    /**
+     * Run a command
+     * @param exeThisCommand
+     */
+    @FXML
+    public void exeCommand(String exeThisCommand) {
+        try {
+            //Run the command
+            Process p = Runtime.getRuntime().exec(exeThisCommand);
+        }catch(IOException e) {}
+    }
+
 
 
 

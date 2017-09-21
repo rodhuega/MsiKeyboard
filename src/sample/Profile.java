@@ -174,4 +174,17 @@ public class Profile implements Serializable {
             return "high";
         }
     }
+
+    public String getCommand() {
+        String theCommand="";
+        if(nColor==1) {
+            theCommand+= colors.get(0);
+        }else if(nColor ==2) {
+            theCommand+= colors.get(0)+ ","+ colors.get(1);
+        }else {
+            theCommand+= colors.get(0)+ ","+ colors.get(1)+ "," + colors.get(2);
+        }
+        theCommand+= " "+ StringBrightness()+" "+ StringMode();
+        return theCommand;
+    }
 }
